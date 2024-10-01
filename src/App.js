@@ -9,6 +9,7 @@ import TrackList from './components/tracklist/tracklist.component';
 function App() {
   const [token, setToken] = useState('');
   const [searchResults, setSearcResults] = useState([]);
+  const [playlist, setPlaylist] = useState([]);
 
   useEffect(() => {
     const clientId = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
@@ -48,11 +49,15 @@ function App() {
     setSearcResults(data.tracks.items);
   };
 
+  const addToPlaylist = (track) => {
+    setPlaylist((prev) => [track, ...prev]);
+  };
+
   return (
     <div className="App">
       <SearchBar onSearch={searchSpotify} />
-      <SearchResults results={searchResults} />
-      <Playlist />
+      <SearchResults results={searchResults} addToPlaylist={addToPlaylist} />
+      <Playlist playlist={playlist} />
       <Track />
       <TrackList />
     </div>
