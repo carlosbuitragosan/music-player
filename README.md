@@ -11,4 +11,7 @@ To practice skills learnt throughout the Codecademy React course.
 
 # Features
 
+- Users can search for songs by song title, album title or artist.
+- Users can export their custom playlist to their personal spotify account.
+
 # Future Work
