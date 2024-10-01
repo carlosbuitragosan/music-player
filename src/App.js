@@ -56,10 +56,8 @@ function App() {
   return (
     <div className="App">
       <SearchBar onSearch={searchSpotify} />
-      <SearchResults results={searchResults} addToPlaylist={addToPlaylist} />
+      <TrackList results={searchResults} addToPlaylist={addToPlaylist} />
       <Playlist playlist={playlist} />
-      <Track />
-      <TrackList />
     </div>
   );
 }

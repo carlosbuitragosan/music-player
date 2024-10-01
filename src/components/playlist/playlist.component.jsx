@@ -1,7 +1,6 @@
 import React from 'react';
 
 export default function Playlist({ playlist }) {
-  console.log(playlist);
   return (
     <div>
       <h2>Your Playlist</h2>
