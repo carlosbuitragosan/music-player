@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import Playlist from './components/playlist/playlist.component';
 import SearchBar from './components/search-bar/search-bar.component';
-import SearchResults from './components/search-results/search-results.component';
-import Track from './components/track/track.component';
 import TrackList from './components/tracklist/tracklist.component';
 
 function App() {
