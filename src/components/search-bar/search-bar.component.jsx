@@ -9,8 +9,10 @@ export default function SearchBar({ onSearch }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSearch(query);
-    setQuery('');
+    if (query) {
+      onSearch(query);
+      setQuery('');
+    }
   };
 
   return (
