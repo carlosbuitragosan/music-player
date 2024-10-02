@@ -1,29 +1,26 @@
 import React, { useState } from 'react';
 
-export default function SearchBar({ onSearch }) {
+export default function SearchBar({ onSearch, resetSearch }) {
   const [query, setQuery] = useState('');
 
   const handleChange = ({ target }) => {
-    setQuery(target.value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
+    const query = target.value;
+    setQuery(query);
     if (query) {
       onSearch(query);
-      setQuery('');
+    } else {
+      resetSearch([]);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form>
       <input
         type="text"
         value={query}
         placeholder="What do you want to listen"
         onChange={handleChange}
       />
-      <button type="submit">Clear</button>
     </form>
   );
 }

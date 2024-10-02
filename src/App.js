@@ -8,7 +8,7 @@ function App() {
   const [token, setToken] = useState('');
   const [searchResults, setSearcResults] = useState([]);
   const [playlist, setPlaylist] = useState([]);
-  console.log({ playlist });
+  console.log({ searchResults });
 
   useEffect(() => {
     const clientId = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
@@ -62,7 +62,7 @@ function App() {
 
   return (
     <div className="App">
-      <SearchBar onSearch={searchSpotify} />
+      <SearchBar onSearch={searchSpotify} resetSearch={setSearcResults} />
       <TrackList results={searchResults} addToPlaylist={addToPlaylist} />
       <Playlist playlist={playlist} removeTrack={removeFromPlaylist} />
     </div>
