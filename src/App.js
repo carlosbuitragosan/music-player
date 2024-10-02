@@ -8,7 +8,6 @@ function App() {
   const [token, setToken] = useState('');
   const [searchResults, setSearcResults] = useState([]);
   const [playlist, setPlaylist] = useState([]);
-  console.log({ searchResults });
 
   useEffect(() => {
     const clientId = process.env.REACT_APP_SPOTIFY_CLIENT_ID;

@@ -1,13 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 export default function Playlist({ playlist, removeTrack }) {
   const [title, setTitle] = useState('');
-
+  const inputRef = useRef(null);
   const addTitle = ({ target }) => {
     setTitle(target.value);
   };
+
   const handleClick = (trackId) => {
     return () => removeTrack(trackId);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      inputRef.current.blur();
+    }
   };
 
   return (
@@ -17,6 +24,8 @@ export default function Playlist({ playlist, removeTrack }) {
         placeholder="Add a title"
         value={title}
         onChange={addTitle}
+        ref={inputRef}
+        onKeyDown={handleKeyDown}
       />
       {playlist.map((track) => (
         <div key={track.id}>
