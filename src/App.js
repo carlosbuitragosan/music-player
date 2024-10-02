@@ -8,6 +8,7 @@ function App() {
   const [token, setToken] = useState('');
   const [searchResults, setSearcResults] = useState([]);
   const [playlist, setPlaylist] = useState([]);
+  console.log({ playlist });
 
   useEffect(() => {
     const clientId = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
@@ -48,14 +49,22 @@ function App() {
   };
 
   const addToPlaylist = (track) => {
-    setPlaylist((prev) => [track, ...prev]);
+    setPlaylist((prev) =>
+      prev.find((prevTrack) => prevTrack.id === track.id)
+        ? prev
+        : [track, ...prev],
+    );
+  };
+
+  const removeFromPlaylist = (trackId) => {
+    setPlaylist((prev) => prev.filter((prevTrack) => prevTrack.id !== trackId));
   };
 
   return (
     <div className="App">
       <SearchBar onSearch={searchSpotify} />
       <TrackList results={searchResults} addToPlaylist={addToPlaylist} />
-      <Playlist playlist={playlist} />
+      <Playlist playlist={playlist} removeTrack={removeFromPlaylist} />
     </div>
   );
 }
