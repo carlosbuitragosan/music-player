@@ -1,12 +1,23 @@
 import React from 'react';
+import './Track.css';
 
 export default function Track({ track, addToPlaylist }) {
   return (
-    <div>
-      <img alt={track.name} src={track.album.images[0].url} width="100" />
-      <h2> {track.name}</h2>
-      <p>Song * {track.artists[0].name}</p>
-      <button type="button" onClick={() => addToPlaylist(track)}>
+    <div className="track__container">
+      <img
+        className="track__img"
+        alt={track.name}
+        src={track.album.images[0].url}
+      />
+      <div className="track__info">
+        <h2 className="track__title"> {track.name}</h2>
+        <p className="track__name">Song • {track.artists[0].name}</p>
+      </div>
+      <button
+        className="track__button"
+        type="button"
+        onClick={() => addToPlaylist(track)}
+      >
         +
       </button>
     </div>
