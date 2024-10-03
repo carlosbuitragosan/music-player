@@ -2,6 +2,10 @@
   font-family: 'Lato', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
+:root {
+  font-size: 18px;
+}
+
 img {
   max-width: 100%;
   border-radius: 50%;
