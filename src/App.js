@@ -3,12 +3,13 @@ import './App.css';
 import Playlist from './components/playlist/playlist.component';
 import SearchBar from './components/search-bar/search-bar.component';
 import TrackList from './components/tracklist/tracklist.component';
+import Header from './components/header/Header.component';
 
 function App() {
   const [token, setToken] = useState('');
+  const [userId, setUserId] = useState('');
   const [searchResults, setSearcResults] = useState([]);
   const [playlist, setPlaylist] = useState([]);
-  const [userId, setUserId] = useState('');
 
   const clientId = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
   const redirectUri = process.env.REACT_APP_SPOTIFY_REDIRECT_URI;
@@ -17,23 +18,20 @@ function App() {
     const hash = window.location.hash;
     let token = localStorage.getItem('spotify_token');
 
-    if (!token && hash) {
+    if (hash) {
       const params = new URLSearchParams(hash.replace('#', ''));
-      token = params.get('access_token');
+      const urlToken = params.get('access_token');
 
-      if (token) {
+      if (urlToken) {
+        token = urlToken;
         window.location.hash = '';
         localStorage.setItem('spotify_token', token);
-        setToken(token);
-        fetchUserId(token);
-      } else {
-        console.error('No access token found in URL');
       }
-    } else if (token) {
+    }
+    if (token) {
       setToken(token);
       fetchUserId(token);
-    }
-    if (!token) {
+    } else {
       redirectToSpotify();
     }
   }, []);
@@ -41,44 +39,6 @@ function App() {
   const redirectToSpotify = () => {
     const scope = 'user-read-private user-read-email playlist-modify-public';
     window.location.href = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${encodeURIComponent(scope)}`;
-  };
-
-  const savePlaylist = async (playlistTitle) => {
-    try {
-      const response = await fetch(
-        `https://api.spotify.com/v1/users/${userId}/playlists`,
-        {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            name: playlistTitle,
-            public: true,
-          }),
-        },
-      );
-
-      const playlistData = await response.json();
-      const tracksUris = playlist.map((track) => track.uri);
-
-      await fetch(
-        `https://api.spotify.com/v1/playlists/${playlistData.id}/tracks`,
-        {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            uris: tracksUris,
-          }),
-        },
-      );
-    } catch (error) {
-      console.error('Error saving playlist', error);
-    }
   };
 
   const fetchUserId = async (accessToken) => {
@@ -126,6 +86,44 @@ function App() {
     setSearcResults(data.tracks.items);
   };
 
+  const savePlaylist = async (playlistTitle) => {
+    try {
+      const response = await fetch(
+        `https://api.spotify.com/v1/users/${userId}/playlists`,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: playlistTitle,
+            public: true,
+          }),
+        },
+      );
+
+      const playlistData = await response.json();
+      const tracksUris = playlist.map((track) => track.uri);
+
+      await fetch(
+        `https://api.spotify.com/v1/playlists/${playlistData.id}/tracks`,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            uris: tracksUris,
+          }),
+        },
+      );
+    } catch (error) {
+      console.error('Error saving playlist', error);
+    }
+  };
+
   const addToPlaylist = (track) => {
     setPlaylist((prev) =>
       prev.find((prevTrack) => prevTrack.id === track.id)
@@ -140,13 +138,19 @@ function App() {
 
   return (
     <div className="App">
-      <SearchBar onSearch={searchSpotify} resetSearch={setSearcResults} />
-      <TrackList results={searchResults} addToPlaylist={addToPlaylist} />
-      <Playlist
-        playlist={playlist}
-        removeTrack={removeFromPlaylist}
-        savePlaylist={savePlaylist}
-      />
+      <Header />
+      <div className="main__container">
+        <div className="search__container">
+          <SearchBar onSearch={searchSpotify} resetSearch={setSearcResults} />
+          <TrackList results={searchResults} addToPlaylist={addToPlaylist} />
+        </div>
+        <Playlist
+          className="playlist__container"
+          playlist={playlist}
+          removeTrack={removeFromPlaylist}
+          savePlaylist={savePlaylist}
+        />
+      </div>
     </div>
   );
 }
