@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 
-export default function Playlist({ playlist, removeTrack }) {
+export default function Playlist({ playlist, removeTrack, savePlaylist }) {
   const [title, setTitle] = useState('');
   const inputRef = useRef(null);
   const addTitle = ({ target }) => {
@@ -15,6 +15,10 @@ export default function Playlist({ playlist, removeTrack }) {
     if (e.key === 'Enter') {
       inputRef.current.blur();
     }
+  };
+
+  const handleSavePlaylist = () => {
+    savePlaylist(title);
   };
 
   return (
@@ -37,6 +41,9 @@ export default function Playlist({ playlist, removeTrack }) {
           </button>
         </div>
       ))}
+      <button type="button" onClick={handleSavePlaylist}>
+        Add to Spotify
+      </button>
     </div>
   );
 }
