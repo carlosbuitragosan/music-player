@@ -15,7 +15,6 @@ function App() {
 
   useEffect(() => {
     const hash = window.location.hash;
-
     let token = localStorage.getItem('spotify_token');
 
     if (!token && hash) {
@@ -89,6 +88,12 @@ function App() {
         Authorization: `Bearer ${accessToken}`,
       },
     });
+
+    if (response.status === 401) {
+      localStorage.removeItem('spotify_token');
+      redirectToSpotify();
+      return;
+    }
     if (!response.ok) {
       console.error('Failed to fetch user ID', response.statusText);
       return;
