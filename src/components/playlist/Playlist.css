@@ -1,0 +1,25 @@
+.playlist__tack_container {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.playlist__track_remove-button {
+  align-self: center;
+  margin-left: auto;
+  margin-right: 1rem;
+  padding: 0.2rem 0.5rem;
+  font-size: 1.2rem;
+  font-weight: 900;
+  border-radius: 4px;
+}
+
+.playlist__track_name {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 300;
+}
+
+.playlist__track_artist {
+  margin: 0;
+  font-weight: 100;
+}

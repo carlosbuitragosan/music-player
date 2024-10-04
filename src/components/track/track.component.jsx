@@ -10,7 +10,7 @@ export default function Track({ track, addToPlaylist }) {
         src={track.album.images[0].url}
       />
       <div className="track__info">
-        <h2 className="track__title"> {track.name}</h2>
+        <p className="track__title"> {track.name}</p>
         <p className="track__name">Song • {track.artists[0].name}</p>
       </div>
       <button

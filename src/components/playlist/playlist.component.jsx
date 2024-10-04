@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import './Playlist.css';
 
 export default function Playlist({ playlist, removeTrack, savePlaylist }) {
   const [title, setTitle] = useState('');
@@ -22,7 +23,7 @@ export default function Playlist({ playlist, removeTrack, savePlaylist }) {
   };
 
   return (
-    <div>
+    <div className="playlist__container">
       <input
         type="text"
         placeholder="Add a title"
@@ -32,11 +33,16 @@ export default function Playlist({ playlist, removeTrack, savePlaylist }) {
         onKeyDown={handleKeyDown}
       />
       {playlist.map((track) => (
-        <div key={track.id}>
-          <img alt={track.name} src={track.album.images[0].url} width="50" />
-          <p>{track.name}</p>
-          <p>{track.artists[0].name}</p>
-          <button type="button" onClick={handleClick(track.id)}>
+        <div key={track.id} className="playlist__tack_container">
+          <div className="playlist__track_info">
+            <p className="playlist__track_name">{track.name}</p>
+            <p className="playlist__track_artist">{track.artists[0].name}</p>
+          </div>
+          <button
+            className="playlist__track_remove-button"
+            type="button"
+            onClick={handleClick(track.id)}
+          >
             -
           </button>
         </div>

@@ -135,7 +135,7 @@ function App() {
     setPlaylist((prev) =>
       prev.find((prevTrack) => prevTrack.id === track.id)
         ? prev
-        : [track, ...prev],
+        : [...prev, track],
     );
   };
 
@@ -152,7 +152,6 @@ function App() {
           <TrackList results={searchResults} addToPlaylist={addToPlaylist} />
         </div>
         <Playlist
-          className="playlist__container"
           playlist={playlist}
           removeTrack={removeFromPlaylist}
           savePlaylist={savePlaylist}
