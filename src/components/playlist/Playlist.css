@@ -1,3 +1,25 @@
+.playlist__container {
+  display: flex;
+  flex-direction: column;
+}
+
+.playlist__title {
+  border: none;
+  background-color: #1f1b24;
+  color: #e0e0e0;
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  text-transform: capitalize;
+}
+
+.playlist__title::placeholder {
+  color: #9282a5;
+}
+
+.playlist__title:focus {
+  outline: none;
+}
+
 .playlist__tack_container {
   display: flex;
   margin-bottom: 1rem;
@@ -22,4 +44,13 @@
 .playlist__track_artist {
   margin: 0;
   font-weight: 100;
+}
+
+.addPlaylist__button {
+  width: 50%;
+  margin: 0 auto;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  padding: 0.4rem;
+  margin-top: 1rem;
 }

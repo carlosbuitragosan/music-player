@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './search-bar.css';
 
 export default function SearchBar({ onSearch, resetSearch }) {
   const [query, setQuery] = useState('');
@@ -14,11 +15,12 @@ export default function SearchBar({ onSearch, resetSearch }) {
   };
 
   return (
-    <form>
+    <form className="searchbar">
       <input
+        className="searchbar__input"
         type="text"
         value={query}
-        placeholder="What do you want to listen"
+        placeholder="Search Spotify"
         onChange={handleChange}
       />
     </form>

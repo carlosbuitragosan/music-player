@@ -32,3 +32,7 @@ button {
 .playlist__container {
   flex: 1;
 }
+
+.search__container {
+  padding-left: 1rem;
+}

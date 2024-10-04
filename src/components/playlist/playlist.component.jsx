@@ -25,6 +25,7 @@ export default function Playlist({ playlist, removeTrack, savePlaylist }) {
   return (
     <div className="playlist__container">
       <input
+        className="playlist__title"
         type="text"
         placeholder="Add a title"
         value={title}
@@ -47,7 +48,11 @@ export default function Playlist({ playlist, removeTrack, savePlaylist }) {
           </button>
         </div>
       ))}
-      <button type="button" onClick={handleSavePlaylist}>
+      <button
+        className="addPlaylist__button"
+        type="button"
+        onClick={handleSavePlaylist}
+      >
         Add to Spotify
       </button>
     </div>

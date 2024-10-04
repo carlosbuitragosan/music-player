@@ -1,0 +1,18 @@
+.searchbar__input {
+  font-size: 1.4rem;
+  width: 85%;
+  border-radius: 24px;
+  border-style: none;
+  background-color: #564d61;
+  padding: 0.4rem 1rem;
+  color: #e0e0e0;
+  margin-bottom: 1rem;
+}
+
+.searchbar__input::placeholder {
+  color: #9282a5;
+}
+
+.searchbar__input:focus {
+  outline: none;
+}
