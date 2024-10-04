@@ -26,13 +26,12 @@ button {
 .main__container {
   display: flex;
   justify-content: space-around;
-}
-
-.search__container,
-.playlist__container {
-  flex: 1;
+  padding: 0 3rem;
 }
 
 .search__container {
-  padding-left: 1rem;
+  flex: 1.5;
+}
+.playlist__container {
+  flex: 1;
 }

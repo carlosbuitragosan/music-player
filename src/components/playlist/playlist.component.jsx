@@ -4,8 +4,13 @@ import './Playlist.css';
 export default function Playlist({ playlist, removeTrack, savePlaylist }) {
   const [title, setTitle] = useState('');
   const inputRef = useRef(null);
+
   const addTitle = ({ target }) => {
-    setTitle(target.value);
+    if (target.value.length === 0) {
+      setTitle(target.value);
+    } else {
+      setTitle(target.value[0].toUpperCase() + target.value.slice(1));
+    }
   };
 
   const handleClick = (trackId) => {
