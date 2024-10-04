@@ -21,6 +21,16 @@ button {
   background-color: #4caf50;
   color: #fff;
   border-style: none;
+  cursor: pointer;
+  transition: transfor 200ms ease;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+button:active {
+  transform: scale(0.95);
 }
 
 .main__container {
