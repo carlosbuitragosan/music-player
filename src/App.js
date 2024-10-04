@@ -88,46 +88,54 @@ function App() {
   };
 
   const savePlaylist = async (playlistTitle) => {
-    if (playlistTitle) {
-      try {
-        // create a playlist
-        const response = await fetch(
-          `https://api.spotify.com/v1/users/${userId}/playlists`,
-          {
-            method: 'POST',
-            headers: {
-              Authorization: `Bearer ${token}`,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              name: playlistTitle,
-              public: true,
-            }),
+    if (!playlistTitle && playlist.length === 0) {
+      alert('Please create your playlist.');
+      return;
+    }
+    if (!playlistTitle) {
+      alert('Please add a title');
+      return;
+    }
+    if (playlist.length === 0) {
+      alert('Please add some songs.');
+      return;
+    }
+    try {
+      // create a playlist
+      const response = await fetch(
+        `https://api.spotify.com/v1/users/${userId}/playlists`,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
           },
-        );
-        const playlistData = await response.json();
-        const tracksUris = playlist.map((track) => track.uri);
+          body: JSON.stringify({
+            name: playlistTitle,
+            public: true,
+          }),
+        },
+      );
+      const playlistData = await response.json();
+      const tracksUris = playlist.map((track) => track.uri);
 
-        //add tracks to playlist
-        await fetch(
-          `https://api.spotify.com/v1/playlists/${playlistData.id}/tracks`,
-          {
-            method: 'POST',
-            headers: {
-              Authorization: `Bearer ${token}`,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              uris: tracksUris,
-            }),
+      //add tracks to playlist
+      await fetch(
+        `https://api.spotify.com/v1/playlists/${playlistData.id}/tracks`,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
           },
-        );
-        setPlaylist([]);
-      } catch (error) {
-        console.error('Error saving playlist', error);
-      }
-    } else {
-      alert('Please add a tittle.');
+          body: JSON.stringify({
+            uris: tracksUris,
+          }),
+        },
+      );
+      setPlaylist([]);
+    } catch (error) {
+      console.error('Error saving playlist', error);
     }
   };
 
