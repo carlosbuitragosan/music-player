@@ -33,8 +33,9 @@ export default function Playlist({ playlist, removeTrack, savePlaylist }) {
     }, 0);
   };
   const handleSavePlaylist = () => {
-    savePlaylist(title);
-    setTitle('');
+    savePlaylist(title, () => {
+      setTitle('');
+    });
   };
 
   return (

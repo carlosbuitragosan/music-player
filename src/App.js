@@ -89,7 +89,7 @@ function App() {
     setSearcResults(data.tracks.items);
   };
 
-  const savePlaylist = async (playlistTitle) => {
+  const savePlaylist = async (playlistTitle, onSuccess) => {
     if (!playlistTitle && playlist.length === 0) {
       toast.error('Please create your playlist.');
       return;
@@ -136,7 +136,10 @@ function App() {
         },
       );
       setPlaylist([]);
-      toast.success('Playlist saved.');
+      if (onSuccess) {
+        onSuccess();
+        toast.success('Playlist saved.');
+      }
     } catch (error) {
       console.error('Error saving playlist', error);
       toast.error('Error saving playlist.');
