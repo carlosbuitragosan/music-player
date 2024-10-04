@@ -1,4 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
+import { ToastContainer, toast, Zoom } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 import Playlist from './components/playlist/playlist.component';
 import SearchBar from './components/search-bar/search-bar.component';
@@ -89,15 +91,15 @@ function App() {
 
   const savePlaylist = async (playlistTitle) => {
     if (!playlistTitle && playlist.length === 0) {
-      alert('Please create your playlist.');
+      toast.error('Please create your playlist.');
       return;
     }
     if (!playlistTitle) {
-      alert('Please add a title');
+      toast.error('Please add a title');
       return;
     }
     if (playlist.length === 0) {
-      alert('Please add some songs.');
+      toast.error('Please add some songs.');
       return;
     }
     try {
@@ -134,8 +136,10 @@ function App() {
         },
       );
       setPlaylist([]);
+      toast.success('Playlist saved.');
     } catch (error) {
       console.error('Error saving playlist', error);
+      toast.error('Error saving playlist.');
     }
   };
 
@@ -165,6 +169,19 @@ function App() {
           savePlaylist={savePlaylist}
         />
       </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover={false}
+        theme="dark"
+        transition={Zoom}
+      />
     </div>
   );
 }

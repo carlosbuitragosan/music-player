@@ -45,3 +45,8 @@ button:active {
 .playlist__container {
   flex: 1;
 }
+
+.Toastify__toast {
+  background-color: #564d62;
+  color: #e0e0e0;
+}
