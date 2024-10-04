@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import './App.css';
 import Playlist from './components/playlist/playlist.component';
 import SearchBar from './components/search-bar/search-bar.component';
@@ -13,6 +13,35 @@ function App() {
 
   const clientId = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
   const redirectUri = process.env.REACT_APP_SPOTIFY_REDIRECT_URI;
+
+  const redirectToSpotify = useCallback(() => {
+    const scope = 'user-read-private user-read-email playlist-modify-public';
+    window.location.href = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${encodeURIComponent(scope)}`;
+  }, [clientId, redirectUri]);
+
+  const fetchUserId = useCallback(
+    async (accessToken) => {
+      const response = await fetch('https://api.spotify.com/v1/me', {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      if (response.status === 401) {
+        localStorage.removeItem('spotify_token');
+        redirectToSpotify();
+        return;
+      }
+      if (!response.ok) {
+        console.error('Failed to fetch user ID', response.statusText);
+        return;
+      }
+      const data = await response.json();
+      setUserId(data.id);
+    },
+    [redirectToSpotify],
+  );
 
   useEffect(() => {
     const hash = window.location.hash;
@@ -34,33 +63,7 @@ function App() {
     } else {
       redirectToSpotify();
     }
-  }, []);
-
-  const redirectToSpotify = () => {
-    const scope = 'user-read-private user-read-email playlist-modify-public';
-    window.location.href = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${encodeURIComponent(scope)}`;
-  };
-
-  const fetchUserId = async (accessToken) => {
-    const response = await fetch('https://api.spotify.com/v1/me', {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-
-    if (response.status === 401) {
-      localStorage.removeItem('spotify_token');
-      redirectToSpotify();
-      return;
-    }
-    if (!response.ok) {
-      console.error('Failed to fetch user ID', response.statusText);
-      return;
-    }
-    const data = await response.json();
-    setUserId(data.id);
-  };
+  }, [fetchUserId, redirectToSpotify]);
 
   const searchSpotify = async (query) => {
     if (!token) {
@@ -88,6 +91,7 @@ function App() {
 
   const savePlaylist = async (playlistTitle) => {
     try {
+      // create a playlist
       const response = await fetch(
         `https://api.spotify.com/v1/users/${userId}/playlists`,
         {
@@ -106,6 +110,7 @@ function App() {
       const playlistData = await response.json();
       const tracksUris = playlist.map((track) => track.uri);
 
+      //add tracks to playlist
       await fetch(
         `https://api.spotify.com/v1/playlists/${playlistData.id}/tracks`,
         {
