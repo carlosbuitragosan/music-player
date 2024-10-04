@@ -23,6 +23,15 @@ export default function Playlist({ playlist, removeTrack, savePlaylist }) {
     }
   };
 
+  const handleFocus = () => {
+    setTimeout(() => {
+      const input = inputRef.current;
+      if (input) {
+        const length = input.value.length;
+        input.setSelectionRange(length, length);
+      }
+    }, 0);
+  };
   const handleSavePlaylist = () => {
     savePlaylist(title);
   };
@@ -37,6 +46,7 @@ export default function Playlist({ playlist, removeTrack, savePlaylist }) {
         onChange={addTitle}
         ref={inputRef}
         onKeyDown={handleKeyDown}
+        onFocus={handleFocus}
       />
       {playlist.map((track) => (
         <div key={track.id} className="playlist__tack_container">
