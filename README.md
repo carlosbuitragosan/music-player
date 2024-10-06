@@ -1,3 +1,5 @@
+![(https://github.com/carlosbuitragosan/music-player/workflows/Deploy/badge.svg)]
+
 # Purpose of this Project
 
 To practice skills learnt throughout the Codecademy React course.
