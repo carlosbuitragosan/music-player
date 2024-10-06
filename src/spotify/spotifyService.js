@@ -6,8 +6,6 @@ const redirectUri =
     ? process.env.REACT_APP_SPOTIFY_REDIRECT_URI
     : 'http://localhost:3000/';
 
-console.log(redirectUri);
-
 export const redirectToSpotify = () => {
   const scope = 'user-read-private user-read-email playlist-modify-public';
   window.location.href = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${encodeURIComponent(scope)}`;
@@ -58,16 +56,13 @@ export const searchSpotify = async (query, token) => {
 
 export const savePlaylist = async (playlistTitle, playlist, token, userId) => {
   if (!playlistTitle && playlist.length === 0) {
-    toast.error('Please create your playlist.');
-    return;
+    throw new Error('Please create your playlist with a title.');
   }
   if (!playlistTitle) {
-    toast.error('Please add a title.');
-    return;
+    throw new Error('Please add a title.');
   }
   if (playlist.length === 0) {
-    toast.error('Please add some songs.');
-    return;
+    throw new Error('Please add some songs.');
   }
   try {
     // create a playlist

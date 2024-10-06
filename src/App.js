@@ -55,8 +55,8 @@ function App() {
       setPlaylist([]);
       if (onSuccess) {
         onSuccess();
-        toast.success('Playlist saved.');
       }
+      toast.success('Playlist saved.');
     } catch (error) {
       toast.error(error.message);
     }
