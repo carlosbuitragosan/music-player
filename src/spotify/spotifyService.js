@@ -1,7 +1,10 @@
 import { toast } from 'react-toastify';
 
 const clientId = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
-const redirectUri = process.env.REACT_APP_SPOTIFY_REDIRECT_URI;
+const redirectUri =
+  process.env.NODE_ENV === 'production'
+    ? process.env.REACT_APP_SPOTIFY_REDIRECT_URI
+    : 'http://localhost:3000/';
 
 export const redirectToSpotify = () => {
   const scope = 'user-read-private user-read-email playlist-modify-public';
