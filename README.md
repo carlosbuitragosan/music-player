@@ -1,4 +1,4 @@
-![(https://github.com/carlosbuitragosan/music-player/workflows/Deploy/badge.svg)]
+![Deploy Status](https://github.com/carlosbuitragosan/music-player/workflows/Deploy/badge.svg)
 
 # Purpose of this Project
 
