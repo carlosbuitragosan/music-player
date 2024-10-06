@@ -6,7 +6,8 @@ const redirectUri =
     ? process.env.REACT_APP_SPOTIFY_REDIRECT_URI
     : 'http://localhost:3000/';
 
-console.log({ clientId });
+console.log(redirectUri);
+
 export const redirectToSpotify = () => {
   const scope = 'user-read-private user-read-email playlist-modify-public';
   window.location.href = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${encodeURIComponent(scope)}`;
