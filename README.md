@@ -8,6 +8,8 @@ To practice skills learnt throughout the Codecademy React course.
 - Prettier to ensure consistent code formatting and save time.
 - Spotify's API to access music data and playback control.
 - GitHub pages to host site.
+- GitHub Secrets to store client's information.
+- GitHub Actions to access variables during building process.
 
 # Features
 
