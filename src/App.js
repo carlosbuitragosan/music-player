@@ -39,8 +39,6 @@ function App() {
         const userId = await fetchUserId(token);
         setUserId(userId);
       })();
-    } else {
-      redirectToSpotify();
     }
   }, []);
 
@@ -50,6 +48,10 @@ function App() {
   };
 
   const handleSavePlaylist = async (playlistTitle, onSuccess) => {
+    if (!token) {
+      redirectToSpotify();
+      return;
+    }
     try {
       await savePlaylist(playlistTitle, playlist, token, userId);
       setPlaylist([]);
