@@ -39,12 +39,14 @@ function App() {
         const userId = await fetchUserId(token);
         setUserId(userId);
       })();
-    } else {
-      redirectToSpotify();
     }
   }, []);
 
   const handleSearch = async (query) => {
+    if (!token) {
+      redirectToSpotify();
+      return;
+    }
     const results = await searchSpotify(query, token);
     setSearcResults(results);
   };
