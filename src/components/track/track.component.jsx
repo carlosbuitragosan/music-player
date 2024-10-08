@@ -2,6 +2,9 @@ import React from 'react';
 import './Track.css';
 
 export default function Track({ track, addToPlaylist }) {
+  const handleClick = (track) => {
+    addToPlaylist(track);
+  };
   return (
     <div className="track__container">
       <img
@@ -16,7 +19,7 @@ export default function Track({ track, addToPlaylist }) {
       <button
         className="track__button"
         type="button"
-        onClick={() => addToPlaylist(track)}
+        onClick={handleClick(track)}
       >
         +
       </button>
