@@ -19,7 +19,6 @@ export const fetchUserId = async (accessToken) => {
 
   if (response.status === 401) {
     localStorage.removeItem('spotify_token');
-    redirectToSpotify();
     return null;
   }
   if (!response.ok) {
