@@ -47,8 +47,12 @@ function App() {
       redirectToSpotify();
       return;
     }
-    const results = await searchSpotify(query, token);
-    setSearcResults(results);
+    try {
+      const results = await searchSpotify(query, token);
+      setSearcResults(results);
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   const handleSavePlaylist = async (playlistTitle, onSuccess) => {

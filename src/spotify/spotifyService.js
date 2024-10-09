@@ -22,8 +22,7 @@ export const fetchUserId = async (accessToken) => {
     return null;
   }
   if (!response.ok) {
-    console.error('Failed to fetch user ID', response.statusText);
-    return null;
+    throw new Error('Failed to fetch user ID', response.statusText);
   }
   const data = await response.json();
   return data.id;
@@ -31,8 +30,7 @@ export const fetchUserId = async (accessToken) => {
 
 export const searchSpotify = async (query, token) => {
   if (!token) {
-    console.error('No access token available');
-    return [];
+    throw new Error('No access token available');
   }
   const response = await fetch(
     `https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=track`,
@@ -44,8 +42,8 @@ export const searchSpotify = async (query, token) => {
     },
   );
   if (!response.ok) {
-    console.error('Failed to search tracks', response.statusText);
-    return [];
+    redirectToSpotify();
+    return;
   }
   const data = await response.json();
   return data.tracks.items;
