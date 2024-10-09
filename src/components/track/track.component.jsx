@@ -3,7 +3,9 @@ import './Track.css';
 
 export default function Track({ track, addToPlaylist }) {
   const handleClick = (track) => {
-    addToPlaylist(track);
+    return () => {
+      addToPlaylist(track);
+    };
   };
   return (
     <div className="track__container">

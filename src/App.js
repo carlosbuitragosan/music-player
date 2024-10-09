@@ -40,7 +40,6 @@ function App() {
         setUserId(userId);
       })();
     }
-    setPlaylist([]);
   }, []);
 
   const handleSearch = async (query) => {
